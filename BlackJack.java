@@ -21,38 +21,38 @@ public class BlackJack{
     System.out.println(k.getValue());
 
 
-  int index = 1;
+    int index = 1;
 
-  System.out.println("------------------------------------------------------------------");
-  System.out.println("Normal Deck");
-  System.out.println("------------------------------------------------------------------");
+    System.out.println("------------------------------------------------------------------");
+    System.out.println("Normal Deck");
+    System.out.println("------------------------------------------------------------------");
 
-  Deck deck = new Deck();
-  while(!deck.isEmpty()){
-    System.out.println(index + " " + deck.deal());
-    index++;
-  }
+    Deck deck = new Deck();
+    while(!deck.isEmpty()){
+      System.out.println(index + " " + deck.deal());
+      index++;
+    }
 
-  index = 1;
-  deck.shuffle();
+    index = 1;
+    deck.shuffle();
 
-  System.out.println("------------------------------------------------------------------");
-  System.out.println("Shuffle Deck");
-  System.out.println("------------------------------------------------------------------");
-  while(!deck.isEmpty()){
-    System.out.println(index + " " + deck.deal());
-    index++;
-  }
+    System.out.println("------------------------------------------------------------------");
+    System.out.println("Shuffle Deck");
+    System.out.println("------------------------------------------------------------------");
+    while(!deck.isEmpty()){
+      System.out.println(index + " " + deck.deal());
+      index++;
+    }
 
-  index = 1;
-  deck.shuffle();
-  System.out.println("------------------------------------------------------------------");
-  System.out.println("Shuffle Deck Again");
-  System.out.println("------------------------------------------------------------------");
-  while(!deck.isEmpty()){
-    System.out.println(index + " " + deck.deal());
-    index++;
-  }
+    index = 1;
+    deck.shuffle();
+    System.out.println("-------------------------------------------------------------------");
+    System.out.println("Shuffle Deck Again");
+    System.out.println("-------------------------------------------------------------------");
+    while(!deck.isEmpty()){
+      System.out.println(index + " " + deck.deal());
+      index++;
+    }
 
   }
 }
