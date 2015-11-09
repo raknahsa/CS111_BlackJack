@@ -35,7 +35,6 @@ public class BlackJack{
 
     index = 1;
     deck.shuffle();
-
     System.out.println("------------------------------------------------------------------");
     System.out.println("Shuffle Deck");
     System.out.println("------------------------------------------------------------------");
