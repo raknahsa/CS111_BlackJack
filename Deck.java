@@ -50,6 +50,6 @@ public class Deck
         cards[count] = cards[i];
         cards[i] = tmp;
     }
-		index = 0;
+		index = 0; 
 	}
 }
