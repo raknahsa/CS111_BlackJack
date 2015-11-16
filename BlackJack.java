@@ -100,7 +100,7 @@ public class BlackJack{
           }
           System.out.println();
 
-          playerBalances[i] -= bet[i];
+        //  playerBalances[i] -= bet[i];
 
   //---------------------------------------------------Start of Round Game Loop---------------------------------------------------------
           while(score <= 21 && playerRound){
@@ -202,14 +202,14 @@ public class BlackJack{
     for(int i = 0; i < numberOfPlayers ; i++){
       if(playerScores[i] > dealerScore){
         System.out.println(players[i] + " has won " + bet[i]);
-        playerBalances[i] += bet[i] * 2;
+        playerBalances[i] += bet[i];
       }
       else if(playerScores[i] < dealerScore){
         System.out.println(players[i] + " has lost " + bet[i]);
+        playerBalances[i] += bet[i];
       }
       else{
         System.out.println(players[i] + " has tied with the dealer");
-        playerBalances[i] += bet[i];
       }
 
     }
