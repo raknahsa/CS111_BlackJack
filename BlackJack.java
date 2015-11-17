@@ -244,7 +244,8 @@ public class BlackJack{
 
     }
 //---------------------------------------------------End of Main Game While Loop---------------------------------------------------------
-    System.out.println("Game Ends...");
+    //System.out.println("Game Ends...");
+    System.out.println();
 
     for(int i = 0; i < numberOfPlayers ; i++){
       System.out.println("Player " + (i + 1) + "\n" + players[i] + ":" + playerBalances[i]);
