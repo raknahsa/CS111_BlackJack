@@ -1,108 +1,30 @@
-Design Document for Black Jack Project
-=======================================
+Changes in code for more advanced play
 
-Variables to be used:
-boolean gameContinues : True when game is session, false when game ends.
-int numberOfPlayers : User inputed number of players.
-double balance : How much each player starts with(maybe later set each player differently).
-String [] players : An array which contains the names of each player.
-int [] playerBalances : An array which will contain the balance of each player.
-Deck deck : The deck of cards.
-int score : Temporary variable for the scores.
-int bet : How much the players are going to bet for that round.// Possibly later change to array for multiple bets
-int []  playerScores : Keep score of the player.
-int dealerScore : Score of the dealer.
+For double down:
+After count is 2, there will be an option which will allow the user to double down.
+If they user says yes, then the bet will be doubled and only 1 more card will be dealt(possibly go out of loop)
+Whether they win/lose is the same code.
 
-First the deck of cards will be declared/initialized.
+For insurance:
+If the face up card is an ace, there will be a loop which asks each player if they want to take insurance.
+There will also be a separate variable for the insurance bet which will be be added/reduced to the balance if they win/lose.
 
-  Deck deck = new Deck();
+For split:
+Have a temporary variable to check if the last card is the same so that a split can be offered, if the player decides to split, have a if statement
+that allows for two hands to exists and only runs if the player has decided to split.
+Also use the count variable to check which round it is to see if split is possible.
 
-Next, the program will ask for the number of players through IO and put it in the variable numberOfPlayers. //Allows for more than two players.
-The program will then use this input to create two arrays, one for scores and one for names with the length of numberOfPlayers.
+For blackjack:
+Have a separate if statement that check if the player got black jack and then have more money be given if this occurs(probably 1.5x more)\
 
-The program will then use a for loop which uses the numberOfPlayers as the end length (ie. for(int i = 0; i < numberOfPlayers; i++))
-Inside this loop, there will be IO statements to ask for the name and statements to initialize the balances.
-ie. (in the for loop)
-  {
-    String [i] = IO.readString();
-    playerBalances[i] = balance;  //IO.readInt() if for different balances.
-  }
+For hints:
+Using the probability statistics and data from online, hints will be given on how favorable it is to hit/split/stand and etc.
+Hints will either give the probability of winning for the respective move or have it so if the probability of a
+move to win is greater than 50%(could be changed), the hint system will tell that it is favorable.
 
-Next, the main program will contain a while loop which will run the main game.
+Examples of probability/hint
+Hint: Your score is 20, you should stand as you have a high chance of busting.
+Hint: You got 2 aces, it is favorable for you to split.
 
-  while(gameContinues){}
-
-The gameContinues will only be false when the group of player decides to end the game, so the game will continue to run in the loop as long as the players want to.
-
-Inside the while loop, first the program will ask for what the bet value will be and assign it to the variable bet.
-Next, the deck will be shuffled.
-
-  deck.shuffle();
-
-
-Then the game will enter a for loop with a nested while loop.
-The for loop while run for each player and the while loop will run for a game for each player.
-
-  for(int i = 0; i < numberOfPlayers; i++){
-    System.out.println("Player " + i + "'s turn:'");  //User friendly output.
-    while(score <= 21){} //While loop which runs for the player, more info below.
-    playerScores[i] = score; //assign the score to the player.
-    score = 0; //reset the score to 0 for each player.
-    deck.shuffle(). //shuffle the deck, could be done now or at each round.
-  }
-
-The while loop will run as long as the score is less than or equal to 21.
-Inside the loop, the program(or dealer) will deal a card with deck.deal().
-
-The face/suit of the card will be shown to the player through deck[i].getFace() and deck[i].getSuit()
-
-If the face is an ace, and the score is 10 or less, 11 will be added in a sperate if statment.
-Other wise, the value of the card will then be added onto score. (ie. score += deck[i].getValue()).
-
-
-There will then be an if statement asking if the player wants to hit or continue.
-
-If yes, the while loop will continue and deal again, if no, the loop will exit through a break statement.
-The while loop will then exit, assign the score to the respective player, reset the score to 0 for the next player and shuffle the deck for the next player.
-
-If the player busts, there will be an if statement which makes the score 0 and then breaks out of the loop( due to the condition of score <= 21).
-
-After each player plays, the for loop will exit and go into the main while loop.
-The game will then enter a do while loop which will run for the dealer.
-Function of this loop will be same as players loop but there is no if statement asking if they want to hit, the loop will only exit when statement is false.(score <= 21).
-The dealer will then be assigned his score to dealerScore , similarly to the player.(Score will be assigned, bust means that the score is 0).
-
-After dealer has gotten his score, the program will enter another for loop which runs for each player. (for(int i = 0; i < numberOfPlayers; i++))
-In this loop, there will be an if statement which checks if the respective player's score is larger, the same, or less then the dealer.
-
-If the score is larger, the respective player will receive the bet value(asked for in the beginning of the main while loop).
-If the score is the same, the balance stays the same.
-If the score is less, the bet will be reduced from the balance of the player.
-(This is the same outcome as taking the bet in the beginning and then adding 2x the bet, the bet, or nothing for the respective cases).
-
-After the balances of the players have been changed according to the output of the round, there will be an if statement which asks if the players want to enter another round.
-If yes, the gameContinues will stay true, and the main while loop runs again.
-If no, the gameContinues will become false, the main while loop will end.
-
-The players score can also be outputted before or after the if statement at the end of the round.
-
-The program will then check who has the highest balance and rank them in ascending order.
-Ex.
-(End Output)
-Player 1 ends with $30.
-Player 3 ends with $20.
-Player 2 ends with $10.
-Player 1 Wins!
-
-The program will then exit/end.
-
-Error Possibilities:
-If the user enters a input which is not accepted (string for int, int for string, way too long names).
-There will be while loop at each user input which will only continue if the input is acceptable.
-IO.read will also take care of mismatch in data(string instead of int, etc.).
-Check if the deck is empty, shuffle and create new deck if this occurs.
-Errors in deck creation should not occur since there is no user input affecting it.
-
-Format:
-System.out.println() and System.out.print() will be used to help the user when asking for input, showing the game as it continues, and other user needs.
-These functions were mostly not included in the design document since they do not affect the algorithm but will be in the main code so that the user can follow what is happening.
+hint system can also possibly count cards to change probability as the game goes on.
+shuffling at each round may have to be removed for this to work.
