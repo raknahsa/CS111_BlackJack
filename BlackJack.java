@@ -200,13 +200,17 @@ public class BlackJack{
     System.out.println();
 
     for(int i = 0; i < numberOfPlayers ; i++){
-      if(playerScores[i] > dealerScore){
+      if(playerScores[i] == 0){
+        System.out.println(players[i] + " has lost " + bet[i]);
+        playerBalances[i] -= bet[i];
+      }
+      else if(playerScores[i] > dealerScore){
         System.out.println(players[i] + " has won " + bet[i]);
         playerBalances[i] += bet[i];
       }
       else if(playerScores[i] < dealerScore){
         System.out.println(players[i] + " has lost " + bet[i]);
-        playerBalances[i] += bet[i];
+        playerBalances[i] -= bet[i];
       }
       else{
         System.out.println(players[i] + " has tied with the dealer");
