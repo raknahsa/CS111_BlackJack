@@ -1,0 +1,30 @@
+Changes in code for more advanced play
+
+For double down:
+After count is 2, there will be an option which will allow the user to double down.
+If they user says yes, then the bet will be doubled and only 1 more card will be dealt(possibly go out of loop)
+Whether they win/lose is the same code.
+
+For insurance:
+If the face up card is an ace, there will be a loop which asks each player if they want to take insurance.
+There will also be a separate variable for the insurance bet which will be be added/reduced to the balance if they win/lose.
+
+For split:
+Have a temporary variable to check if the last card is the same so that a split can be offered, if the player decides to split, have a if statement
+that allows for two hands to exists and only runs if the player has decided to split.
+Also use the count variable to check which round it is to see if split is possible.
+
+For blackjack:
+Have a separate if statement that check if the player got black jack and then have more money be given if this occurs(probably 1.5x more)\
+
+For hints:
+Using the probability statistics and data from online, hints will be given on how favorable it is to hit/split/stand and etc.
+Hints will either give the probability of winning for the respective move or have it so if the probability of a
+move to win is greater than 50%(could be changed), the hint system will tell that it is favorable.
+
+Examples of probability/hint
+Hint: Your score is 20, you should stand as you have a high chance of busting.
+Hint: You got 2 aces, it is favorable for you to split.
+
+hint system can also possibly count cards to change probability as the game goes on.
+shuffling at each round may have to be removed for this to work.
