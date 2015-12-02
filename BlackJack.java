@@ -13,6 +13,7 @@ public class BlackJack{
     int round = 1;
     boolean notValidCommand = true;
     Card faceUpCard;
+    Card faceDownCard;
     String answer;
     boolean playerRound = true;
 
@@ -51,10 +52,12 @@ public class BlackJack{
       System.out.println("Player " + (i + 1) + ", enter your name.");
       players[i] = IO.readString();
       System.out.println(players[i] + ", what is your balance?");
+      System.out.print("$");
       playerBalances[i] = IO.readInt();
       if(playerBalances[i] <= 0){
         System.out.println(players[i] + ", you can't play with no money. Come back with something to bet with...");
         System.out.println("Now, do you have the money you want to bet with or are you going to stil keep you balance at 0?");
+        System.out.print("$");
         playerBalances[i] = IO.readInt();
         if(playerBalances[i] <= 0){
           System.out.println();
@@ -90,13 +93,23 @@ public class BlackJack{
         }
         else{
           System.out.println("How much are you betting for this round?");
+          System.out.print("$");
           //code to check if bet is less than balance
 
           bet[i] = IO.readInt();
 
-          while(bet[i] > playerBalances[i]){
-            System.out.println("How are you going to bet more money than what you have... " +  "\n" + "Please enter a valid bet");
-            bet[i] = IO.readInt();
+
+          while(bet[i] > playerBalances[i] || bet[i] <= 0){
+            if(bet[i] > playerBalances[i]){
+              System.out.println("How are you going to bet more money than what you have... " +  "\n" + "Please enter a valid bet");
+              System.out.print("$");
+              bet[i] = IO.readInt();
+            }
+            else if(bet[i] <= 0){//not sure if an individual player can pass on a round
+              System.out.println("You have to bet something atleast... " +  "\n" + "Please enter a valid bet");
+              System.out.print("$");
+              bet[i] = IO.readInt();
+            }
           }
           System.out.println();
 
@@ -129,7 +142,15 @@ public class BlackJack{
               else
                 score += faceUpCard.getValue();
 
-              System.out.println("Dealer: There a two cards here. The face up card is " + faceUpCard);
+              faceDownCard = deck.deal();
+                if(faceDownCard.getValue() == 1 && score <= 10){
+                  score += 11;
+                }
+                else
+                  score += faceDownCard.getValue();
+
+
+              System.out.println("Dealer: There a two cards here. The first card is " + faceUpCard + ". The second card is " + faceDownCard);
               System.out.println("Dealer: Do you want to hit? (Enter yes to hit and no to stand) ..." + "(Your current score is " + score + ")");
             }
 
@@ -157,7 +178,7 @@ public class BlackJack{
       }
       //  deck.shuffle(). //shuffle the deck, could be done now or at each round.
       }
-//---------------------------------------------------End of Round Game Loop---------------------------------------------------------
+//---------------------------------------------------End of Round Game Loop------------------------------------------------------------
 
 
 //---------------------------------------------------Start of Dealer Game Loop---------------------------------------------------------
@@ -200,20 +221,24 @@ public class BlackJack{
     System.out.println();
 
     for(int i = 0; i < numberOfPlayers ; i++){
-      if(playerScores[i] == 0){
-        System.out.println(players[i] + " has lost " + bet[i]);
+
+      if(playerBalances[i] == 0){
+        System.out.println(players[i] + " is bankrupt");
+      }
+      else if(playerScores[i] == 0){
+        System.out.println(players[i] + " has lost $" + bet[i]);
         playerBalances[i] -= bet[i];
       }
       else if(playerScores[i] > dealerScore){
-        System.out.println(players[i] + " has won " + bet[i]);
+        System.out.println(players[i] + " has won $" + bet[i]);
         playerBalances[i] += bet[i];
       }
       else if(playerScores[i] < dealerScore){
-        System.out.println(players[i] + " has lost " + bet[i]);
+        System.out.println(players[i] + " has lost $" + bet[i]);
         playerBalances[i] -= bet[i];
       }
       else{
-        System.out.println(players[i] + " has tied with the dealer");
+        System.out.println(players[i] + " has tied with the dealer (No money lost/earned)");
       }
 
     }
@@ -222,7 +247,7 @@ public class BlackJack{
       System.out.println("Current Scores.");
       System.out.println("----------------");
       for(int i = 0; i < numberOfPlayers ; i++){
-        System.out.println("Player " + (i + 1) + "\n" + players[i] + ":" + playerBalances[i]);
+        System.out.println("Player " + (i + 1) + "\n" + players[i] + " : $" + playerBalances[i]);
       }
 
       System.out.println("Dealer: Do you want to play another round?");
@@ -251,8 +276,37 @@ public class BlackJack{
     //System.out.println("Game Ends...");
     System.out.println();
 
-    for(int i = 0; i < numberOfPlayers ; i++){
-      System.out.println("Player " + (i + 1) + "\n" + players[i] + ":" + playerBalances[i]);
+
+    int tmp;
+    String tmpp;
+//    int index;
+
+    for(int i = 0; i < players.length - 1; i++){
+      //smallest = arr[i];
+      for(int j = i + 1; j > 0; j--){
+        if(playerBalances[j] > playerBalances[j - 1]){
+          //smallest = arr[j];
+          tmp = playerBalances[j - 1];
+          playerBalances[j - 1] = playerBalances[j];
+          playerBalances[j] = tmp;
+
+          tmpp = players[j - 1];
+          players[j - 1] = players[j];
+          players[j] = tmpp;
+        }
+        else{
+          break;
+        }
+      }
     }
+
+    System.out.println("Here is the ranking of the players based on how much money they ended up with.");
+
+    for(int i = 0; i < numberOfPlayers ; i++){
+      System.out.println((i + 1) + ". " + players[i] + " : $" + playerBalances[i]);
+    }
+
+
+
   }
 }
